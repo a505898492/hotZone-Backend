@@ -11,4 +11,4 @@ class LocationSerializer(serializers.ModelSerializer):
 class LocationVisitHistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = LocationVisitHistory
-        fields = ['id', 'patient_id', 'location_id', 'date_from', 'date_to', 'category']
+        fields = ['id', 'case_id', 'location_id', 'date_from', 'date_to', 'category']

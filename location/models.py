@@ -1,4 +1,5 @@
 from django.db import models
+from case.models import Case
 from patient.models import Patient
 
 
@@ -21,11 +22,11 @@ class LocationVisitHistory(models.Model):
     ]
     
     objects = models.Manager()
-    patient_id = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    location_id = models.ForeignKey(Location, on_delete=models.CASCADE)
+    case = models.ForeignKey(Case, on_delete=models.CASCADE)
+    location = models.ForeignKey(Location, on_delete=models.CASCADE)
     date_from = models.DateField()
     date_to = models.DateField()
     category = models.CharField(max_length=10, choices=CATEGORY, default='Visit')
 
     def __str__(self):
-        return f"{self.location_id}"
+        return f"[{self.case}]: {self.location} ({self.date_from} - {self.date_to})"

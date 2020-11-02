@@ -10,11 +10,11 @@ class Case(models.Model):
     ]
 
     objects = models.Manager()
-    patient_id = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    virus_id = models.ForeignKey(Virus, on_delete=models.CASCADE)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    virus = models.ForeignKey(Virus, on_delete=models.CASCADE)
     case_number = models.CharField(max_length=20)
     date_confirmed = models.DateField()
     local_or_imported = models.CharField(max_length=10, choices=LOCAL_OR_IMPORTED, default='Local')
 
     def __str__(self):
-        return self.case_number
+        return f"{self.case_number}: {self.patient} ({self.virus})"
