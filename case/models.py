@@ -10,9 +10,9 @@ class Case(models.Model):
     ]
 
     objects = models.Manager()
+    case_number = models.CharField(max_length=20) 
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     virus = models.ForeignKey(Virus, on_delete=models.CASCADE)
-    case_number = models.CharField(max_length=20)
     date_confirmed = models.DateField()
     local_or_imported = models.CharField(max_length=10, choices=LOCAL_OR_IMPORTED, default='Local')
 
