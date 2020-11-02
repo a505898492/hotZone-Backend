@@ -4,7 +4,6 @@ from location import views
 
 
 urlpatterns = [
-    path('', views.LocationList.as_view()),
     path('search', views.SearchList.as_view()),
 ]
 
