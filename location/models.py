@@ -6,7 +6,7 @@ from patient.models import Patient
 class Location(models.Model):
     objects = models.Manager()
     location = models.CharField(max_length=120)
-    address = models.CharField(max_length=120, null=True)
+    address = models.CharField(max_length=120, null=True, blank=True)
     x_coord = models.IntegerField()
     y_coord = models.IntegerField()
 
