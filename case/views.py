@@ -29,9 +29,10 @@ class CaseDetail(APIView):
         return Response(serializer.data)
 
 
-class CaseHistory(APIView):
+class CaseLocationHistory(APIView):
 
     def get(self, request, pk):
         histories = LocationVisitHistory.objects.filter(case=pk)
         serializer = LocationVisitHistorySerializer(histories, many=True)  
         return Response(serializer.data)
+    
