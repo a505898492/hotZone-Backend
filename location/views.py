@@ -1,10 +1,9 @@
-from rest_framework.generics import get_object_or_404
 from location.serializers import LocationSerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from location.models import Location
 from rest_framework import status
-from django.http import Http404
+import requests
 
 
 class LocationList(APIView):
@@ -20,3 +19,11 @@ class LocationList(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class SearchList(APIView):
+
+    def get(self, request):
+        geoDataList = requests.get('https://geodata.gov.hk/gs/api/v1.0.0/locationSearch', params=request.GET)
+        if geoDataList.status_code == 200:
+            return Response(geoDataList.json())
+        return Response(status=status.HTTP_400_BAD_REQUEST)

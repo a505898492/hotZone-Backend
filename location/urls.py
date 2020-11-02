@@ -4,7 +4,8 @@ from location import views
 
 
 urlpatterns = [
-    path('locations', views.LocationList.as_view()),
+    path('', views.LocationList.as_view()),
+    path('search', views.SearchList.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
