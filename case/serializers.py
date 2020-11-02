@@ -3,11 +3,6 @@ from case.models import Case
 
 
 class CaseSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Case
-        fields = ['id', 'patient', 'virus', 'case_number', 'date_confirmed', 'local_or_imported']
-
-class CaseListSerializer(serializers.ModelSerializer):
     patient_name = serializers.SerializerMethodField()
     patient_id_number = serializers.SerializerMethodField()
     patient_birth = serializers.SerializerMethodField()

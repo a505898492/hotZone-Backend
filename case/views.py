@@ -1,8 +1,11 @@
-from case.serializers import CaseListSerializer
+from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
-from location.models import Case
+from location.serializers import LocationVisitHistorySerializer
+from case.serializers import CaseSerializer
+from location.models import LocationVisitHistory
+from case.models import Case
 import requests
 
 
@@ -10,14 +13,25 @@ class CaseList(APIView):
 
     def get(self, request):
         cases = Case.objects.all()
-        serializer = CaseListSerializer(cases, many=True)  
+        serializer = CaseSerializer(cases, many=True)  
         return Response(serializer.data)
 
 
 class CaseDetail(APIView):
 
-    def get(self, request):
-        geoDataList = requests.get('https://geodata.gov.hk/gs/api/v1.0.0/locationSearch', params=request.GET)
-        if geoDataList.status_code == 200:
-            return Response(geoDataList.json())
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+    def get_object(self, pk):
+        case = get_object_or_404(Case, pk=pk)
+        return case
+
+    def get(self, request, pk):
+        case = self.get_object(pk)
+        serializer = CaseSerializer(case)
+        return Response(serializer.data)
+
+
+class CaseHistory(APIView):
+
+    def get(self, request, pk):
+        histories = LocationVisitHistory.objects.filter(case=pk)
+        serializer = LocationVisitHistorySerializer(histories, many=True)  
+        return Response(serializer.data)
